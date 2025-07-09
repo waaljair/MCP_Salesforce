@@ -439,6 +439,159 @@ export class SalesforceClient {
     }
   }
 
+  async createAccount(accountData: any) {
+    try {
+      const account = {
+        Name: accountData.name,
+        Industry: accountData.industry,
+        Phone: accountData.phone,
+        Website: accountData.website,
+        BillingStreet: accountData.billingStreet,
+        BillingCity: accountData.billingCity,
+        BillingState: accountData.billingState,
+        BillingPostalCode: accountData.billingPostalCode,
+        BillingCountry: accountData.billingCountry,
+        Description: accountData.description,
+        NumberOfEmployees: accountData.numberOfEmployees,
+        AnnualRevenue: accountData.annualRevenue,
+        Type: accountData.type,
+      };
+
+      // Remove undefined fields
+      Object.keys(account).forEach(key => {
+        if ((account as any)[key] === undefined) {
+          delete (account as any)[key];
+        }
+      });
+
+      const result = await this.conn.sobject("Account").create(account);
+
+      const resultArray = Array.isArray(result) ? result : [result];
+      const firstResult = resultArray[0];
+
+      if (!firstResult.success) {
+        throw new Error(`Failed to create account: ${firstResult.errors?.join(", ")}`);
+      }
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({
+              success: true,
+              id: firstResult.id,
+              message: `Account "${accountData.name}" created successfully`,
+              accountId: firstResult.id
+            }, null, 2)
+          }
+        ]
+      };
+    } catch (error) {
+      throw new Error(`Failed to create account: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+
+  async createContact(contactData: any) {
+    try {
+      const contact = {
+        FirstName: contactData.firstName,
+        LastName: contactData.lastName,
+        Email: contactData.email,
+        Phone: contactData.phone,
+        Title: contactData.title,
+        Department: contactData.department,
+        AccountId: contactData.accountId,
+        MailingStreet: contactData.mailingStreet,
+        MailingCity: contactData.mailingCity,
+        MailingState: contactData.mailingState,
+        MailingPostalCode: contactData.mailingPostalCode,
+        MailingCountry: contactData.mailingCountry,
+        Description: contactData.description,
+      };
+
+      // Remove undefined fields
+      Object.keys(contact).forEach(key => {
+        if ((contact as any)[key] === undefined) {
+          delete (contact as any)[key];
+        }
+      });
+
+      const result = await this.conn.sobject("Contact").create(contact);
+
+      const resultArray = Array.isArray(result) ? result : [result];
+      const firstResult = resultArray[0];
+
+      if (!firstResult.success) {
+        throw new Error(`Failed to create contact: ${firstResult.errors?.join(", ")}`);
+      }
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({
+              success: true,
+              id: firstResult.id,
+              message: `Contact "${contactData.firstName ? contactData.firstName + ' ' : ''}${contactData.lastName}" created successfully`,
+              contactId: firstResult.id
+            }, null, 2)
+          }
+        ]
+      };
+    } catch (error) {
+      throw new Error(`Failed to create contact: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+
+  async createOpportunity(opportunityData: any) {
+    try {
+      const opportunity = {
+        Name: opportunityData.name,
+        AccountId: opportunityData.accountId,
+        StageName: opportunityData.stageName,
+        CloseDate: opportunityData.closeDate,
+        Amount: opportunityData.amount,
+        Probability: opportunityData.probability,
+        Type: opportunityData.type,
+        Description: opportunityData.description,
+        LeadSource: opportunityData.leadSource,
+        NextStep: opportunityData.nextStep,
+      };
+
+      // Remove undefined fields
+      Object.keys(opportunity).forEach(key => {
+        if ((opportunity as any)[key] === undefined) {
+          delete (opportunity as any)[key];
+        }
+      });
+
+      const result = await this.conn.sobject("Opportunity").create(opportunity);
+
+      const resultArray = Array.isArray(result) ? result : [result];
+      const firstResult = resultArray[0];
+
+      if (!firstResult.success) {
+        throw new Error(`Failed to create opportunity: ${firstResult.errors?.join(", ")}`);
+      }
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({
+              success: true,
+              id: firstResult.id,
+              message: `Opportunity "${opportunityData.name}" created successfully`,
+              opportunityId: firstResult.id
+            }, null, 2)
+          }
+        ]
+      };
+    } catch (error) {
+      throw new Error(`Failed to create opportunity: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+
   async searchAllRecords(query: string, limit: number = 20) {
     try {
       const soslQuery = `

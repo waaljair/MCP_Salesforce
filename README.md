@@ -154,6 +154,11 @@ SALESFORCE_SECURITY_TOKEN=your_security_token_here
 - `update_contact` - Update contact information
 - `update_opportunity` - Update opportunity information
 
+### Create Tools
+- `create_account` - Create new Salesforce accounts
+- `create_contact` - Create new Salesforce contacts
+- `create_opportunity` - Create new Salesforce opportunities
+
 ### Activity Tools
 - `get_recent_activities` - Get recent activities for any record
 - `create_task` - Create new tasks in Salesforce
@@ -165,16 +170,21 @@ SALESFORCE_SECURITY_TOKEN=your_security_token_here
 - "Show me details for the Acme Corp account"
 - "Update the close date for opportunity XYZ to next month"
 - "Create a follow-up task for contact John Doe"
+- "Create a new opportunity for the Tech Solutions account"
+- "Create a new contact for the marketing director at Acme Corp"
 
 ### For Marketing Teams
 - "Find all leads from the technology industry"
 - "Search for contacts at companies with 'Software' in their name"
 - "Show me recent activities for our key accounts"
+- "Create a new account for the prospect company we just met"
+- "Create a new contact for the lead that just signed up"
 
 ### For C-Suite
 - "Search for all opportunities over $100,000"
 - "Find accounts in the financial services industry"
 - "Show me recent activities across all major accounts"
+- "Create a new strategic account for our enterprise prospect"
 
 ## Environment Variables
 

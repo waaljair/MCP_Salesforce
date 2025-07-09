@@ -278,6 +278,180 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         },
       },
       {
+        name: "create_account",
+        description: "Create a new Salesforce account",
+        inputSchema: {
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              description: "Account name (required)",
+            },
+            industry: {
+              type: "string",
+              description: "Account industry",
+            },
+            phone: {
+              type: "string",
+              description: "Account phone number",
+            },
+            website: {
+              type: "string",
+              description: "Account website URL",
+            },
+            billingStreet: {
+              type: "string",
+              description: "Billing street address",
+            },
+            billingCity: {
+              type: "string",
+              description: "Billing city",
+            },
+            billingState: {
+              type: "string",
+              description: "Billing state/province",
+            },
+            billingPostalCode: {
+              type: "string",
+              description: "Billing postal code",
+            },
+            billingCountry: {
+              type: "string",
+              description: "Billing country",
+            },
+            description: {
+              type: "string",
+              description: "Account description",
+            },
+            numberOfEmployees: {
+              type: "number",
+              description: "Number of employees",
+            },
+            annualRevenue: {
+              type: "number",
+              description: "Annual revenue",
+            },
+            type: {
+              type: "string",
+              description: "Account type (e.g., Customer, Partner, Prospect)",
+            },
+          },
+          required: ["name"],
+        },
+      },
+      {
+        name: "create_contact",
+        description: "Create a new Salesforce contact",
+        inputSchema: {
+          type: "object",
+          properties: {
+            firstName: {
+              type: "string",
+              description: "Contact first name",
+            },
+            lastName: {
+              type: "string",
+              description: "Contact last name (required)",
+            },
+            email: {
+              type: "string",
+              description: "Contact email address",
+            },
+            phone: {
+              type: "string",
+              description: "Contact phone number",
+            },
+            title: {
+              type: "string",
+              description: "Contact job title",
+            },
+            department: {
+              type: "string",
+              description: "Contact department",
+            },
+            accountId: {
+              type: "string",
+              description: "Associated account ID",
+            },
+            mailingStreet: {
+              type: "string",
+              description: "Mailing street address",
+            },
+            mailingCity: {
+              type: "string",
+              description: "Mailing city",
+            },
+            mailingState: {
+              type: "string",
+              description: "Mailing state/province",
+            },
+            mailingPostalCode: {
+              type: "string",
+              description: "Mailing postal code",
+            },
+            mailingCountry: {
+              type: "string",
+              description: "Mailing country",
+            },
+            description: {
+              type: "string",
+              description: "Contact description",
+            },
+          },
+          required: ["lastName"],
+        },
+      },
+      {
+        name: "create_opportunity",
+        description: "Create a new Salesforce opportunity",
+        inputSchema: {
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              description: "Opportunity name (required)",
+            },
+            accountId: {
+              type: "string",
+              description: "Associated account ID (required)",
+            },
+            stageName: {
+              type: "string",
+              description: "Opportunity stage (required)",
+            },
+            closeDate: {
+              type: "string",
+              description: "Close date in YYYY-MM-DD format (required)",
+            },
+            amount: {
+              type: "number",
+              description: "Opportunity amount",
+            },
+            probability: {
+              type: "number",
+              description: "Probability percentage (0-100)",
+            },
+            type: {
+              type: "string",
+              description: "Opportunity type (e.g., New Business, Existing Business)",
+            },
+            description: {
+              type: "string",
+              description: "Opportunity description",
+            },
+            leadSource: {
+              type: "string",
+              description: "Lead source",
+            },
+            nextStep: {
+              type: "string",
+              description: "Next step in the sales process",
+            },
+          },
+          required: ["name", "accountId", "stageName", "closeDate"],
+        },
+      },
+      {
         name: "search_all_records",
         description: "Search across all Salesforce records using SOSL (global search)",
         inputSchema: {
@@ -351,6 +525,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       case "create_task":
         return await salesforceClient.createTask(typedArgs);
+
+      case "create_account":
+        return await salesforceClient.createAccount(typedArgs);
+
+      case "create_contact":
+        return await salesforceClient.createContact(typedArgs);
+
+      case "create_opportunity":
+        return await salesforceClient.createOpportunity(typedArgs);
 
       case "search_all_records":
         return await salesforceClient.searchAllRecords(typedArgs.query, typedArgs.limit);
